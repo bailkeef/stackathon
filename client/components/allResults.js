@@ -12,20 +12,21 @@ export class AllListings extends React.Component {
   }
 
   componentDidMount() {
+    console.log('AllListings mounted')
     this.props.fetchAllListings()
   }
 
   render() {
-    let allListings = this.props.listings.allListings
+    console.log(this.props, 'this.props in AllListings')
+    let allListings = this.props.listings
 
     return (
       <div className="container">
+        <h3>HELLO</h3>
         {allListings &&
           allListings.map(listing => (
-            <div className="allListings" key={puzzle.id}>
-              <img className="images" src={puzzle.imageUrl} />
+            <div className="allListings" key={listing.id}>
               <h3>{listing.wiki}</h3>
-              {/* puzzle.pieceCount > 0 is to ensured only shows pieceCount when it's not out-of-stocks */}
             </div>
           ))}
       </div>
