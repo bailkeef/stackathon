@@ -22,7 +22,7 @@ async function scrapeListings(url) {
   const page = await browser.newPage()
   // const requestId = await initiateCaptchaRequest(apiKey);
 
-  await page.goto('https://www.forsalebyowner.com/search/list/08753', {
+  await page.goto(url, {
     waitUntil: 'domcontentloaded'
   })
 

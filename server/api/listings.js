@@ -17,7 +17,8 @@ router.post('/', async (req, res, next) => {
   try {
     console.log('here')
     console.log(req.body, 'req.body')
-    const data = await scrapers.scrapeListings(req.body.url)
+    const url = `https://www.forsalebyowner.com/search/list/${req.body.zipcode}`
+    const data = await scrapers.scrapeListings(url)
     console.log(data, 'this is the data')
     const newListings = await Listing.bulkCreate(data)
     res.json(newListings)

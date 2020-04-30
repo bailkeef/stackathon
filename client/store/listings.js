@@ -5,7 +5,7 @@ import history from '../history'
  * ACTION TYPES
  */
 const GET_ALL_LISTINGS = 'GET_ALL_LISTINGS'
-const SET_URL = 'SET_URL'
+const SET_ZIPCODE = 'SET_ZIPCODE'
 // const REMOVE_USER = 'REMOVE_USER'
 
 /**
@@ -14,14 +14,14 @@ const SET_URL = 'SET_URL'
 const initialState = {
   singleListing: {},
   allListings: [],
-  url: ''
+  zipcode: ''
 }
 
 /**
  * ACTION CREATORS
  */
 const getAllListings = listings => ({type: GET_ALL_LISTINGS, listings})
-const setUrl = url => ({type: SET_URL, url})
+const setZipcode = zipcode => ({type: SET_ZIPCODE, zipcode})
 
 /**
  * THUNK CREATORS
@@ -35,16 +35,16 @@ export const fetchAllListings = () => async dispatch => {
   }
 }
 
-export const uploadListings = url => {
+export const uploadListings = zipcode => {
   return async (dispatch, getState) => {
     console.log('inside uploadListings')
-    console.log(url, 'url')
-    dispatch(setUrl(url))
+    console.log(zipcode, 'zipcode')
+    dispatch(setZipcode(zipcode))
     const state = getState()
     console.log(state, 'state in UploadListings')
     try {
       let res = await axios.post('/api/listings', {
-        url: state.listings.url
+        zipcode: state.listings.zipcode
       })
       dispatch(getAllListings(res.data || initialState))
       // dispatch(getAllListings(res.data || initialState))
@@ -72,8 +72,8 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case GET_ALL_LISTINGS:
       return {...state, allListings: action.listings}
-    case SET_URL:
-      return {...state, url: action.url}
+    case SET_ZIPCODE:
+      return {...state, zipcode: action.zipcode}
     default:
       return state
   }

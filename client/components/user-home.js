@@ -34,9 +34,12 @@ export class UserHome extends React.Component {
   handleSubmit() {
     event.preventDefault()
     console.log('click')
-    console.log(typeof event.target.url.value, 'thing im passing in as url')
-    let url = event.target.url.value
-    this.props.uploadListings(url)
+    console.log(
+      typeof event.target.zipcode.value,
+      'thing im passing in as zip code'
+    )
+    let zipcode = event.target.zipcode.value
+    this.props.uploadListings(zipcode)
     this.props.fetchAllListings()
   }
 
@@ -51,9 +54,9 @@ export class UserHome extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <input
               className="url-input"
-              name="url"
+              name="zipcode"
               type="text"
-              placeholder="Enter a url"
+              placeholder="Enter a zip code"
               onChange={this.handleChange}
             />
             <button type="submit">submit</button>
@@ -83,7 +86,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    uploadListings: url => dispatch(uploadListings(url)),
+    uploadListings: zipcode => dispatch(uploadListings(zipcode)),
     fetchAllListings: () => dispatch(fetchAllListings())
   }
 }
