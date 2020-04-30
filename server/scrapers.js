@@ -59,7 +59,7 @@ async function scrapeListings(url) {
     }
 
     console.log(address, price, addresses, prices, homes)
-    return {address, price, prices, addresses, homes}
+    return homes
   })
 
   // console.log(data)

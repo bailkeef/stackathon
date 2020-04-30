@@ -27,10 +27,11 @@ export class AllListings extends React.Component {
     return (
       <div className="container">
         <h3>HELLO</h3>
-        {allListings &&
+        {allListings.length > 0 &&
           allListings.map(listing => (
             <div className="allListings" key={listing.id}>
-              <h3>{listing.wiki}</h3>
+              <h3>{listing.address}</h3>
+              <h3>{listing.price}</h3>
             </div>
           ))}
       </div>

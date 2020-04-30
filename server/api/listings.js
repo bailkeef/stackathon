@@ -14,10 +14,14 @@ router.get('/', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-  console.log('here')
-  console.log(req.body, 'req.body')
-  const data = await scrapers.scrapeListings(req.body.url)
-  console.log(data, 'this is the data')
-  const newListings = await Listing.create(data)
-  res.json(newListings)
+  try {
+    console.log('here')
+    console.log(req.body, 'req.body')
+    const data = await scrapers.scrapeListings(req.body.url)
+    console.log(data, 'this is the data')
+    const newListings = await Listing.bulkCreate(data)
+    res.json(newListings)
+  } catch (err) {
+    console.error(err)
+  }
 })

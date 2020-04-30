@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {uploadListings} from '../store/listings'
+import {uploadListings, fetchAllListings} from '../store/listings'
 import AllListings from './allResults'
 
 /**
@@ -12,11 +12,14 @@ export class UserHome extends React.Component {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.state = {}
+    this.state = {
+      mounted: false
+    }
   }
 
   componentDidMount() {
     console.log(this.props, 'this.props')
+    this.setState({mounted: true})
   }
 
   handleChange() {
@@ -34,38 +37,37 @@ export class UserHome extends React.Component {
     console.log(typeof event.target.url.value, 'thing im passing in as url')
     let url = event.target.url.value
     this.props.uploadListings(url)
-    //   function submitChannel() {
-    //     const channelURL = document.querySelector('.channel-input').value;
-    //     fetch('http://localhost:3000/creators', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({channelURL})
-    //     })
-    // }
+    this.props.fetchAllListings()
   }
 
   render() {
     const {email} = this.props
-    return (
-      <div>
-        <h3>Welcome, {email}</h3>
-        <h4>Get started here:</h4>
+    if (this.state.mounted) {
+      return (
+        <div>
+          <h3>Welcome, {email}</h3>
+          <h4>Get started here:</h4>
 
-        <form onSubmit={this.handleSubmit}>
-          <input
-            className="url-input"
-            name="url"
-            type="text"
-            placeholder="Enter a url"
-            onChange={this.handleChange}
-          />
-          <button type="submit">submit</button>
-        </form>
-        <AllListings />
-      </div>
-    )
+          <form onSubmit={this.handleSubmit}>
+            <input
+              className="url-input"
+              name="url"
+              type="text"
+              placeholder="Enter a url"
+              onChange={this.handleChange}
+            />
+            <button type="submit">submit</button>
+          </form>
+          <AllListings />
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <h3>Loading up your data...</h3>
+        </div>
+      )
+    }
   }
 }
 
@@ -81,7 +83,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    uploadListings: url => dispatch(uploadListings(url))
+    uploadListings: url => dispatch(uploadListings(url)),
+    fetchAllListings: () => dispatch(fetchAllListings())
   }
 }
 

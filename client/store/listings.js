@@ -29,7 +29,7 @@ const setUrl = url => ({type: SET_URL, url})
 export const fetchAllListings = () => async dispatch => {
   try {
     const res = await axios.get('/api/listings')
-    dispatch(getAllListings(res.data || defaultUser))
+    dispatch(getAllListings(res.data || initialState))
   } catch (err) {
     console.error(err)
   }
@@ -46,7 +46,8 @@ export const uploadListings = url => {
       let res = await axios.post('/api/listings', {
         url: state.listings.url
       })
-      dispatch(getAllListings(res.data || defaultUser))
+      dispatch(getAllListings(res.data || initialState))
+      // dispatch(getAllListings(res.data || initialState))
     } catch (err) {
       console.error(err)
     }
