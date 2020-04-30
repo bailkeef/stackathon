@@ -52,6 +52,7 @@
     "passport-google-oauth": "^2.0.0",
     "pg": "^7.9.0",
     "pg-hstore": "^2.3.2",
+    "promise-poller": "^1.9.1",
     "prop-types": "^15.7.2",
     "puppeteer": "^3.0.2",
     "react": "^16.8.6",
@@ -61,7 +62,9 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "sequelize": "^5.3.1",
+    "request": "^2.88.2",
+    "request-promise-native": "^1.0.8",
+    "sequelize": "^5.21.7",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
@@ -94,7 +97,7 @@
     "lint-staged": "^8.1.5",
     "mocha": "^6.1.4",
     "nodemon": "^1.18.3",
-    "npm-merge-driver": "^2.3.5",
+    "npm-merge-driver": "^2.3.6",
     "prettier": "1.11.1",
     "react-test-renderer": "^16.4.2",
     "redux-devtools-extension": "^2.13.5",
