@@ -1,8 +1,12 @@
 const puppeteer = require('puppeteer')
+const chromeOptions = {
+  headless: false,
+  defaultViewport: null
+}
 
 async function scrapeListings(url) {
   console.log('made it into scrapeListings')
-  const browser = await puppeteer.launch()
+  const browser = await puppeteer.launch(chromeOptions)
   const page = await browser.newPage()
   await page.goto(url, {waitUntil: 'networkidle2'})
 

@@ -9,11 +9,15 @@ import {Link} from 'react-router-dom'
 export class AllListings extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      mounted: false
+    }
   }
 
   componentDidMount() {
     console.log('AllListings mounted')
     this.props.fetchAllListings()
+    this.setState({mounted: true})
   }
 
   render() {
