@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {uploadListings, fetchAllListings} from '../store/listings'
-import AllListings from './allResults'
+import AllListings from './allListings'
 
 /**
  * COMPONENT
@@ -48,7 +48,7 @@ export class UserHome extends React.Component {
     if (this.state.mounted) {
       return (
         <div>
-          <h3>Welcome, {email}</h3>
+          <h3>Welcome, {email}!</h3>
           <h4>Get started here:</h4>
 
           <form onSubmit={this.handleSubmit}>

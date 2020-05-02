@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer')
-const request = require('request-promise-native')
-const poll = require('promise-poller').default
-const apiKey = process.env.RECAPTCHA_SECRET
+// const request = require('request-promise-native')
+// const poll = require('promise-poller').default
+// const apiKey = process.env.RECAPTCHA_SECRET
 
 // const siteDetails = {
 //   sitekey: "6Lcj-R8TAAAAABs3FrRPuQhLMbp5QrHsHufzLf7b",
@@ -17,58 +17,90 @@ const chromeOptions = {
 //------------------------------------------------------------
 
 async function scrapeListings(url) {
-  console.log('made it into scrapeListings')
   const browser = await puppeteer.launch(chromeOptions)
   const page = await browser.newPage()
-  // const requestId = await initiateCaptchaRequest(apiKey);
+  // const requestId = await initiateCaptchaRequest(apiKey); //recaptcha
 
   await page.goto(url, {
     waitUntil: 'domcontentloaded'
   })
 
-  // const response = await pollForRequestResults(apiKey, requestId);
-  // console.log(response, 'pollForRequestResults response');
-  // const js = `document.getElementById("g-recaptcha-response").innerHTML="${response}";`
-  // await page.evaluate(js);
+  const links = await page.$$eval('div.estate-bd > div > div > a', links =>
+    links.map(link => link.href)
+  )
+  console.log(links, 'links')
 
-  let data = await page.evaluate(() => {
-    // let wiki = document.querySelector('#www-wikipedia-org > h1 > div > strong').innerText
-    let price = document.querySelectorAll(
-      'div[class="estateSummary-price mix-estateSummary_SM-price_sm"]'
-    ).innerText
-    let address = document.querySelector('div[class="estateSummary-address"]')
-      .innerText
-    console.log(price, address, 'PRICE & ADDRESS')
+  // const response = await pollForRequestResults(apiKey, requestId); //recaptcha
+  // console.log(response, 'pollForRequestResults response'); //recaptcha
+  // const js = `document.getElementById("g-recaptcha-response").innerHTML="${response}";` //recaptcha
+  // await page.evaluate(js); //recaptcha
+  let allListings = []
+  for (let link of links) {
+    const newTab = await browser.newPage()
+    await newTab.goto(link, {
+      waitUntil: 'domcontentloaded'
+    })
+    // do the stuff
+    let phone = await newTab.evaluate(() =>
+      document.querySelector('div [id="nav-stats"] span strong')
+    )
+    console.log(phone, 'phone')
 
-    let prices = Array.from(
-      document.querySelectorAll(
-        'div[class="estateSummary-price mix-estateSummary_SM-price_sm"]'
-      )
-    ).map(curr => curr.innerText)
-
-    let addresses = Array.from(
-      document.querySelectorAll('div[class="estateSummary-address"]')
-    ).map(curr => curr.innerText)
-
-    let homes = []
-    for (let i = 0; i < addresses.length; i++) {
-      homes.push({
-        address: addresses[i],
-        price: prices[i]
+    if (phone) {
+      let data = await newTab.evaluate(() => {
+        console.log('in page evaluate')
+        let phone = document.querySelector('div [id="nav-stats"] span strong')
+          .innerText
+        let address = document.querySelector(
+          '#header > header > div > div.summary-list.clearfix > div.summary-list__col.col-1.col-md-3 > ul.list-inline.list-inline--large'
+        ).innerText
+        let price = document.querySelector(
+          '#header > header > div > div.summary-list.clearfix > div.summary-list__col.col-2.col-md-5 > ul.list-inline.list-inline--with-delimiters.list-inline--large > li:nth-child(1) > label'
+        ).innerText
+        let beds = document.querySelector(
+          '#header > header > div > div.summary-list.clearfix > div.summary-list__col.col-2.col-md-5 > ul.list-inline.list-inline--with-delimiters.list-inline--large > li:nth-child(2) > label'
+        ).innerText
+        let baths = document.querySelector(
+          '#header > header > div > div.summary-list.clearfix > div.summary-list__col.col-2.col-md-5 > ul.list-inline.list-inline--with-delimiters.list-inline--large > li:nth-child(3) > label'
+        ).innerText
+        let sqft = document.querySelector(
+          '#header > header > div > div.summary-list.clearfix > div.summary-list__col.col-2.col-md-5 > ul.list-inline.list-inline--with-delimiters.list-inline--large > li:nth-child(4) > label'
+        ).innerText
+        let img = document.querySelector(
+          '#gallery > div.ug-slider-wrapper > div.ug-slider-inner > div.ug-slide-wrapper.ug-slide2 > div.ug-item-wrapper > img'
+        )
+        let imgUrl
+        if (img) imgUrl = img.innerText
+        console.log({
+          phone,
+          address,
+          price,
+          beds,
+          baths,
+          sqft,
+          imgUrl
+        })
+        return {
+          phone,
+          address,
+          price,
+          beds,
+          baths,
+          sqft,
+          imgUrl
+        }
       })
+      allListings.push(data)
     }
+    await newTab.close()
+  }
+  console.log(allListings)
 
-    console.log(address, price, addresses, prices, homes)
-    return homes
-  })
-
-  // console.log(data)
   await browser.close()
-  return data
+  return allListings
 }
 
-//-------------------------------------------------
-
+//--------------FOR RECAPTCHA BYPASSING----------------------------------
 // async function initiateCaptchaRequest(apiKey) {
 //   console.log('inside initiateCaptchaRequest')
 //   const formData = {
