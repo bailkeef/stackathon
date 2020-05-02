@@ -49,18 +49,19 @@ export class UserHome extends React.Component {
       return (
         <div>
           <h3>Welcome, {email}!</h3>
-          <h4>Get started here:</h4>
-
-          <form onSubmit={this.handleSubmit}>
-            <input
-              className="url-input"
-              name="zipcode"
-              type="text"
-              placeholder="Enter a zip code"
-              onChange={this.handleChange}
-            />
-            <button type="submit">submit</button>
-          </form>
+          <div className="wrap">
+            <form className="search" onSubmit={this.handleSubmit}>
+              <textarea
+                className="searchTerm"
+                name="zipcode"
+                onChange={this.handleChange}
+                placeholder="Enter a zip code"
+              />
+              <button type="submit" className="searchButton">
+                submit
+              </button>
+            </form>
+          </div>
           <AllListings />
         </div>
       )

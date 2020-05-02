@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchAllListings} from '../store/listings'
 import {Link} from 'react-router-dom'
+import TextOwners from './textOwners'
 
 /**
  * COMPONENT
@@ -29,7 +30,8 @@ export class AllListings extends React.Component {
         <div className="container-table100">
           <div className="wrap-table100">
             <div className="table100">
-              <h3>FSBO Listings</h3>
+              <h3>Enter Text Message:</h3>
+              <TextOwners />
               <table id="listings-table">
                 <thead>
                   <tr className="table100-head">

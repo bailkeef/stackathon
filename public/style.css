@@ -88,6 +88,7 @@ h5,
 h6 {
   margin: 0px;
   font-family: OpenSans-Regular;
+  align-items: center;
   color: white;
 }
 
@@ -108,6 +109,23 @@ input {
   border: none !important;
 }
 
+.searchTerm {
+  font-size: 24px;
+}
+
+.messageBody {
+  width: 600px;
+  height: 100px !important;
+  border: 3px solid #00b4cc;
+  border-right: none;
+  padding: 5px;
+  height: 36px;
+  border-radius: 5px 5px 5px 5px;
+  outline: none;
+  color: #9dbfaf;
+  font-size: 14px;
+}
+
 textarea {
   display: block;
   outline: none;
@@ -122,7 +140,10 @@ input:focus {
 button {
   outline: none !important;
   border: none;
-  background: transparent;
+  height: 30px;
+  color: white;
+  font-family: OpenSans-Regular;
+  background: #36304a;
 }
 
 button:hover {
@@ -350,4 +371,59 @@ tbody tr:hover {
   }
 }
 
-/* UTIL CSS */
+/* SEARCH BAR */
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #00b4cc;
+  border-right: none;
+  padding: 5px;
+  height: 36px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9dbfaf;
+}
+
+.searchTerm:focus {
+  color: #00b4cc;
+}
+
+.searchButton {
+  width: 100px;
+  height: 36px;
+  border: 1px solid #00b4cc;
+  background: #00b4cc;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.textButton {
+  width: 200px;
+  height: 36px;
+  border: 1px solid #00b4cc;
+  background: #00b4cc;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px 5px 5px 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap {
+  width: 30%;
+  align-self: center;
+  /* position: absolute; */
+  /* top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+}
