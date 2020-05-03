@@ -6,8 +6,7 @@ import history from '../history'
  */
 const GET_ALL_LISTINGS = 'GET_ALL_LISTINGS'
 const SET_ZIPCODE = 'SET_ZIPCODE'
-// const REMOVE_USER = 'REMOVE_USER'
-
+const TEXT_LISTING = 'TEXT_LISTING'
 /**
  * INITIAL STATE
  */
@@ -37,11 +36,8 @@ export const fetchAllListings = () => async dispatch => {
 
 export const uploadListings = zipcode => {
   return async (dispatch, getState) => {
-    console.log('inside uploadListings')
-    console.log(zipcode, 'zipcode')
     dispatch(setZipcode(zipcode))
     const state = getState()
-    console.log(state, 'state in UploadListings')
     try {
       let res = await axios.post('/api/listings', {
         zipcode: state.listings.zipcode
@@ -54,14 +50,23 @@ export const uploadListings = zipcode => {
   }
 }
 
-export const fetchOnePuzzle = id => {
-  return async dispatch => {
-    try {
-      const {data} = await axios.get(`/api/puzzles/${id}`)
-      dispatch(getSinglePuzzle(data))
-    } catch (error) {
-      dispatch(console.error(error))
-    }
+// export const fetchOnePuzzle = id => {
+//   return async dispatch => {
+//     try {
+//       const {data} = await axios.get(`/api/puzzles/${id}`)
+//       dispatch(getSinglePuzzle(data))
+//     } catch (error) {
+//       dispatch(console.error(error))
+//     }
+//   }
+// }
+
+export const textListings = message => async dispatch => {
+  try {
+    const res = await axios.post('/api/listings/text', {message})
+    dispatch(getAllListings(res.data || initialState))
+  } catch (err) {
+    console.error(err)
   }
 }
 

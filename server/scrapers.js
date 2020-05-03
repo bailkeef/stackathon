@@ -46,6 +46,9 @@ async function scrapeListings(url) {
     )
     console.log(phone, 'phone')
 
+    let checkUrl = await newTab.evaluate(() => location.href)
+    console.log(checkUrl, 'checkUrl')
+
     if (phone) {
       let data = await newTab.evaluate(() => {
         console.log('in page evaluate')
@@ -71,15 +74,6 @@ async function scrapeListings(url) {
         )
         let imgUrl
         if (img) imgUrl = img.innerText
-        console.log({
-          phone,
-          address,
-          price,
-          beds,
-          baths,
-          sqft,
-          imgUrl
-        })
         return {
           phone,
           address,
@@ -90,7 +84,17 @@ async function scrapeListings(url) {
           imgUrl
         }
       })
-      allListings.push(data)
+      let allData = {
+        phone: data.phone,
+        address: data.address,
+        price: data.price,
+        beds: data.beds,
+        baths: data.baths,
+        sqft: data.sqft,
+        imgUrl: data.imgUrl,
+        link: link
+      }
+      allListings.push(allData)
     }
     await newTab.close()
   }

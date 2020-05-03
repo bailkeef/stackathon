@@ -27,17 +27,10 @@ export class UserHome extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     })
-    console.log(this.state, '<----local form state')
-    console.log(this.props, 'this.props')
   }
 
   handleSubmit() {
     event.preventDefault()
-    console.log('click')
-    console.log(
-      typeof event.target.zipcode.value,
-      'thing im passing in as zip code'
-    )
     let zipcode = event.target.zipcode.value
     this.props.uploadListings(zipcode)
     this.props.fetchAllListings()

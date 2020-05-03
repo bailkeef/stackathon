@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {fetchAllListings} from '../store/listings'
 import {Link} from 'react-router-dom'
 import TextOwners from './textOwners'
+import ReactTable from 'react-table'
 
 /**
  * COMPONENT
@@ -16,13 +17,11 @@ export class AllListings extends React.Component {
   }
 
   componentDidMount() {
-    console.log('AllListings mounted')
     this.props.fetchAllListings()
     this.setState({mounted: true})
   }
 
   render() {
-    console.log(this.props, 'this.props in AllListings')
     let allListings = this.props.listings
 
     return (

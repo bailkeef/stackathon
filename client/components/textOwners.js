@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchAllListings} from '../store/listings'
+import {fetchAllListings, textListings} from '../store/listings'
 
 /**
  * COMPONENT
@@ -8,6 +8,8 @@ import {fetchAllListings} from '../store/listings'
 export class TextOwners extends React.Component {
   constructor(props) {
     super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
     this.state = {
       mounted: false
     }
@@ -15,13 +17,34 @@ export class TextOwners extends React.Component {
 
   componentDidMount() {}
 
+  handleChange() {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+    console.log(this.state)
+  }
+
+  handleSubmit() {
+    event.preventDefault()
+    console.log('clicked!')
+    let message = this.state.message
+    this.props.textListings(message)
+  }
+
   render() {
     return (
-      <div className="limiter">
-        <input type="text" className="messageBody" name="message" />
-        <button type="submit" className="textButton">
-          Text Owners
-        </button>
+      <div className="limiter" onSubmit={this.handleSubmit}>
+        <form>
+          <input
+            type="text"
+            className="messageBody"
+            name="message"
+            onChange={this.handleChange}
+          />
+          <button type="submit" className="textButton">
+            Text Owners
+          </button>
+        </form>
       </div>
     )
   }
@@ -40,7 +63,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchAllListings: () => dispatch(fetchAllListings())
+    fetchAllListings: () => dispatch(fetchAllListings()),
+    textListings: message => dispatch(textListings(message))
   }
 }
 

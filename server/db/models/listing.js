@@ -19,6 +19,9 @@ const Listing = db.define('listing', {
   },
   sqft: {
     type: Sequelize.STRING
+  },
+  link: {
+    type: Sequelize.STRING
   }
 })
 
