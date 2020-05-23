@@ -2,7 +2,25 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Listing = db.define('listing', {
-  wiki: {
+  phone: {
+    type: Sequelize.STRING
+  },
+  address: {
+    type: Sequelize.STRING
+  },
+  price: {
+    type: Sequelize.STRING
+  },
+  beds: {
+    type: Sequelize.STRING
+  },
+  baths: {
+    type: Sequelize.STRING
+  },
+  sqft: {
+    type: Sequelize.STRING
+  },
+  link: {
     type: Sequelize.STRING
   }
 })

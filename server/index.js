@@ -18,6 +18,7 @@ module.exports = app
 if (process.env.NODE_ENV === 'test') {
   after('close the session store', () => sessionStore.stopExpiringSessions())
 }
+require('dotenv').config({path: __dirname + '/.env'})
 
 /**
  * In your development environment, you can keep all of your
