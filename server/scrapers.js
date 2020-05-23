@@ -11,7 +11,8 @@ const puppeteer = require('puppeteer')
 const chromeOptions = {
   headless: false,
   defaultViewport: null,
-  slowMo: 10
+  // slowMo: 10,
+  args: ['--no-sandbox']
 }
 
 //------------------------------------------------------------
